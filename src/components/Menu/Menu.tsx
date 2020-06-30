@@ -57,6 +57,10 @@ type Props = {
    * @optional
    */
   theme: Theme;
+  /**
+   * pass down overlayTestID from Menu props to touchable to be used on tests.
+   */
+  overlayTestID?: string;
 };
 
 type Layout = $Omit<$Omit<LayoutRectangle, 'x'>, 'y'>;
@@ -339,6 +343,7 @@ class Menu extends React.Component<Props, State> {
       theme,
       statusBarHeight,
       onDismiss,
+      overlayTestID,
     } = this.props;
 
     const {
@@ -530,7 +535,10 @@ class Menu extends React.Component<Props, State> {
         {this.isAnchorCoord() ? null : anchor}
         {rendered ? (
           <Portal>
-            <TouchableWithoutFeedback onPress={onDismiss}>
+            <TouchableWithoutFeedback
+              onPress={onDismiss}
+              testID={overlayTestID}
+            >
               <View style={StyleSheet.absoluteFill} />
             </TouchableWithoutFeedback>
             <View
